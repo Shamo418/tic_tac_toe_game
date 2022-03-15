@@ -10,8 +10,8 @@ board = [[' ', ' ', ' '],
 
 
 # Game functions
-
 def visuale_board():
+    """print the text image of the game board"""
     print(f"      COL1 I COL2 I COL3"
           f"\n     *-----*-----*-----*\nROW1 *  {board[0][0]}  I  {board[0][1]}  I  {board[0][2]}  *\n"
           f"     *-----*-----*-----*\nROW2 *  {board[1][0]}  I  {board[1][1]}  I  {board[1][2]}  "
@@ -20,6 +20,7 @@ def visuale_board():
 
 
 def check_input():
+    """return the position that the player has chosen on the board"""
     if player_two:
         player_name = "Player O"
     elif player_one:
@@ -47,6 +48,7 @@ def check_input():
 
 
 def game_move(player_choice):
+    """place the player's mark ('X' or 'O') on the board"""
     row = player_choice[0]
     column = player_choice[1]
     if player_one:
@@ -58,6 +60,7 @@ def game_move(player_choice):
 
 
 def winner_check():
+    """check which player won"""
     global GAME_ON
     all_pol = [val for sublist in board for val in sublist]
     if f"{board[0][0]}{board[0][1]}{board[0][2]}" == "XXX" or f"{board[1][0]}{board[1][1]}{board[1][2]}" == "XXX" or \
@@ -76,18 +79,16 @@ def winner_check():
         print("It is Draw")
         GAME_ON = False
 
-
-# Game
-visuale_board()
-while GAME_ON:
-    if not player_two:
-        player_one = False
-        player_two = True
-    elif player_two:
-        player_one = True
-        player_two = False
-    player_choice = check_input()
-    game_move(player_choice)
-    print('\n' * 40)
+def main():
+    """tic tac toe game"""
+    global player_one,player_two
     visuale_board()
-    winner_check()
+    while GAME_ON:
+        player_one, player_two = player_two, player_one
+        player_choice = check_input()
+        game_move(player_choice)
+        visuale_board()
+        winner_check()
+
+if __name__ == '__main__':
+    main()
